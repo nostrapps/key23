@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Public Key Generator</title>
+    <title>key23</title>
     <style>
       body {
         background: linear-gradient(135deg, #9d50bb, #6e48aa);
@@ -57,7 +57,7 @@
   </head>
   <body>
     <div class="container">
-      <h1>Public Key Generator</h1>
+      <h1>key23</h1>
       <label for="dataInput">Enter private key (hex):</label>
       <input type="text" id="dataInput" oninput="calculatePublicKey()" />
       <p id="output"></p>
@@ -70,7 +70,13 @@
     >
 
     <script type="module">
-      import { getPublicKey } from 'https://esm.sh/nostr-tools'
+      import * as secp256k1 from 'https://esm.sh/@noble/secp256k1'
+
+      console.log(secp256k1)
+
+      function getPublicKey(privateKey) {
+        return secp256k1.etc.bytesToHex(secp256k1.getPublicKey(privateKey))
+      }
 
       window.calculatePublicKey = async () => {
         const data = document.getElementById('dataInput').value
@@ -84,7 +90,7 @@
           ).innerText = `Public key: ${Array.from(publicKey)
             .map(byte => byte.toString(16).padStart(2, '0'))
             .join('')
-            .substring(0, 2)}` // This line is modified
+            .substring(2, 4)}` // This line is modified
         } catch (err) {
           document.getElementById('output').innerText = `Error: ${err.message}`
         }
